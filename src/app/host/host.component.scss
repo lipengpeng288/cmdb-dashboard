@@ -15,9 +15,17 @@
             height: 0;
 
             .details-container {
-                overflow: hidden;
                 display: flex;
+                overflow: hidden;
                 padding: 0 10px 10px 46px;
+
+                .key {
+                    min-width: 150px;
+                    font-weight: 600;
+                }
+                .value {
+                    line-height: 17px;
+                }
             }
         }
     }

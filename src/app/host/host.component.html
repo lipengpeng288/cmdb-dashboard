@@ -33,22 +33,22 @@
 
                 <ng-container matColumnDef="os">
                     <th mat-header-cell *matHeaderCellDef> OS </th>
-                    <td mat-cell *matCellDef="let elem"> {{(elem.os)? elem.os: ''}} </td>
+                    <td mat-cell *matCellDef="let elem"> {{elem.os}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="department">
                     <th mat-header-cell *matHeaderCellDef> Department </th>
-                    <td mat-cell *matCellDef="let elem"> {{(elem.department)? elem.department: ''}} </td>
+                    <td mat-cell *matCellDef="let elem"> {{elem.department}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef> Type </th>
-                    <td mat-cell *matCellDef="let elem"> {{(elem.type)? elem.type: ''}} </td>
+                    <td mat-cell *matCellDef="let elem"> {{elem.type}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="comment">
                     <th mat-header-cell *matHeaderCellDef> Comment </th>
-                    <td mat-cell *matCellDef="let elem"> {{(elem.comment)? elem.comment: ''}} </td>
+                    <td mat-cell *matCellDef="let elem"> {{elem.comment}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="manufacturer">
@@ -68,42 +68,42 @@
 
                 <ng-container matColumnDef="rack_name">
                     <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> Rack Name </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.rack_name)? elem.rack_name: ''}} </td>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{elem.rack_name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="slot_name">
                     <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> Slot Name </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.rack_slot)? elem.rack_slot: ''}} </td>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{elem.rack_slot}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="cpu_model">
                     <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> CPU Model </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.cpu_model)? elem.cpu_model: ''}} </td>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{elem.cpu_model}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="cpu_base_freq">
                     <th mat-header-cell *matHeaderCellDef fxHide.lt-xl="true"> CPU Base Freq </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-xl="true"> {{(elem.cpu_base_freq)? elem.cpu_base_freq: ''}} </td>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-xl="true"> {{elem.cpu_base_freq}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="cpu_count">
                     <th mat-header-cell *matHeaderCellDef fxHide.lt-xl="true"> CPU Count </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-xl="true"> {{(elem.cpu_count)? elem.cpu_count: ''}} </td>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-xl="true"> {{elem.cpu_count}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="cpu_cores">
                     <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> CPU Cores </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.cpu_cores)? elem.cpu_cores: ''}} </td>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{elem.cpu_cores}} {{(elem.cpu_threads)? '/': ''}} {{(elem.cpu_threads)? elem.cpu_threads: ''}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="memory_populated_dimms">
                     <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> Populated DIMMs </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.populated_dimms)? elem.populated_dimms: ''}} {{(elem.maximum_dimms)? '/': ''}} {{(elem.maximum_dimms)? elem.maximum_dimms: ''}} </td>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{elem.populated_dimms}} {{(elem.maximum_dimms)? '/': ''}} {{(elem.maximum_dimms)? elem.maximum_dimms: ''}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="memory_installed_capacity">
                     <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> Installed Memory </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.installed_memory)? elem.installed_memory: ''}} </td>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{elem.installed_memory}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="network_primary_ip">
@@ -119,8 +119,83 @@
                 <!-- Expanded Content Column -->
                 <ng-container matColumnDef="expanded_details">
                     <td mat-cell *matCellDef="let elem" [attr.colspan]="displayedColumns.length">
-                        <div class="details-container" [@expandDetails]="(elem == expandedElem)? 'expanded': 'collapsed'">
-                            <h1>/* EXPANDED DETAILS */</h1>
+                        <div class="details-container" [@expandDetails]="(elem == expandedElem)? 'expanded': 'collapsed'" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                            <div fxHide fxShow.lt-xl="true" fxFlex="1 1 auto" class="details-manufacturer">
+                                <h3>Basic Information</h3>
+                                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="4px">
+                                    <div fxHide fxShow.lt-sm="true" fxLayout="row">
+                                        <div class="key"> Manufacturer: </div>
+                                        <div class="value"> {{elem.manufacturer}} </div>
+                                    </div>
+                                    <div fxHide fxShow.lt-sm="true" fxLayout="row">
+                                        <div class="key"> Model: </div>
+                                        <div class="value"> {{elem.model}} </div>
+                                    </div>
+                                    <div fxLayout="row">
+                                        <div class="key">Serial Number:</div>
+                                        <div class="value">{{elem.serial_number}}</div>
+                                    </div>
+                                    <div fxHide fxShow.lt-lg="true" fxLayout="row">
+                                        <div class="key">Rack Name:</div>
+                                        <div class="value">{{elem.rack_name}}</div>
+                                    </div>
+                                    <div fxHide fxShow.lt-lg="true" fxLayout="row">
+                                        <div class="key">Slot Name: </div>
+                                        <div class="value">{{elem.rack_slot}}</div>
+                                    </div>
+                                    <div fxHide fxShow.lt-lg="true" fxLayout="row">
+                                        <div class="key">CPU Model: </div>
+                                        <div class="value">{{elem.cpu_model}}</div>
+                                    </div>
+                                    <div fxLayout="row">
+                                        <div class="key">CPU Base Frequency:</div>
+                                        <div class="value">{{elem.cpu_base_freq}}</div>
+                                    </div>
+                                    <div fxLayout="row">
+                                        <div class="key">CPU Count:</div>
+                                        <div class="value">{{elem.cpu_count}}</div>
+                                    </div>
+                                    <div fxHide fxShow.lt-lg="true" fxLayout="row">
+                                        <div class="key">CPU Cores:</div>
+                                        <div class="value">{{elem.cpu_cores}} {{(elem.cpu_threads)? '/': ''}} {{(elem.cpu_threads)? elem.cpu_threads: ''}}</div>
+                                    </div>
+                                    <div fxHide fxShow.lt-lg="true" fxLayout="row">
+                                        <div class="key">Populated DIMMs:</div>
+                                        <div class="value">{{elem.populated_dimms}} {{(elem.maximum_dimms)? '/': ''}} {{(elem.maximum_dimms)? elem.maximum_dimms: ''}}</div>
+                                    </div>
+                                    <div fxHide fxShow.lt-lg="true" fxLayout="row">
+                                        <div class="key">Installed Memory: </div>
+                                        <div class="value">{{elem.installed_memory}}</div>
+                                    </div>
+                                    <div fxHide fxShow.lt-md="true" fxLayout="row">
+                                        <div class="key">Primary IP:</div>
+                                        <div class="value">{{elem.primary_ip_address}}</div>
+                                    </div>
+                                    <div fxHide fxShow.lt-md="true" fxLayout="row">
+                                        <div class="key">IPMI Address:</div>
+                                        <div class="value">{{elem.ipmi_address}}</div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div fxFlex="1 1 auto" class="details-virtual-disks">
+                                <h3>Virtual Disks</h3>
+                                <div *ngFor="let vd of elem.virtual_disks" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                                    <div style="font-weight: 600;">{{vd.name}}</div>
+                                    <div>{{vd.layout}}</div>
+                                    <div>{{vd.size}}</div>
+                                </div>
+                            </div>
+                            <div fxFlex="1 1 auto" class="details-logical-interfaces">
+                                <h3>Logical Interfaces</h3>
+                                <div *ngFor="let li of elem.logical_intfs" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+                                    <div style="font-weight: 600;">{{li.name}}</div>
+                                    <div>Type: {{li.type}}</div>
+                                    <div fxLayout="column" fxLayoutGap="6px">
+                                        <div *ngFor="let m of li.members">{{m.name}} MAC: {{m.mac_address}}</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </td>
                 </ng-container>
