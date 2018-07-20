@@ -1,0 +1,136 @@
+<ng-container title="Overview" title-suffix="Host"></ng-container>
+<mat-tab-group (focusChange)="expandedElem = null">
+    <mat-tab label="Overview">
+        <div class="overview" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10ppx">
+            <div fxLayoutAlign="start center">
+                <mat-icon style="margin: 2px 8px 2px 0">search</mat-icon>
+                <mat-form-field fxFlex="1 1 auto">
+                    <input matInput (keyup)="search($event.target.value)" placeholder="Search">
+                </mat-form-field>
+            </div>
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z4">
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let elem; columns: displayedColumns;" class="host" [class.expanded-row]="expandedElem === elem" (mouseenter)="expandedElem = elem" (mouseleave)="expandedElem = null"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['expanded_details']" class="details-header"></tr>
+
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox color="primary" (change)="$event? toggle(): null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event? selection.toggle(row): null" [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let elem" [routerLink]="elem.name" style="cursor: pointer; outline: none;"> {{elem.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="os">
+                    <th mat-header-cell *matHeaderCellDef> OS </th>
+                    <td mat-cell *matCellDef="let elem"> {{(elem.os)? elem.os: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef> Department </th>
+                    <td mat-cell *matCellDef="let elem"> {{(elem.department)? elem.department: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let elem"> {{(elem.type)? elem.type: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="comment">
+                    <th mat-header-cell *matHeaderCellDef> Comment </th>
+                    <td mat-cell *matCellDef="let elem"> {{(elem.comment)? elem.comment: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="manufacturer">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-sm="true"> Manufacturer </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-sm="true"> {{elem.manufacturer}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="model">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-sm="true"> Model </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-sm="true"> {{elem.model}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="serial_num">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-xl="true"> Serial Num </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-xl="true"> {{elem.serial_number}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rack_name">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> Rack Name </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.rack_name)? elem.rack_name: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="slot_name">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> Slot Name </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.rack_slot)? elem.rack_slot: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cpu_model">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> CPU Model </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.cpu_model)? elem.cpu_model: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cpu_base_freq">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-xl="true"> CPU Base Freq </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-xl="true"> {{(elem.cpu_base_freq)? elem.cpu_base_freq: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cpu_count">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-xl="true"> CPU Count </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-xl="true"> {{(elem.cpu_count)? elem.cpu_count: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cpu_cores">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> CPU Cores </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.cpu_cores)? elem.cpu_cores: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="memory_populated_dimms">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> Populated DIMMs </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.populated_dimms)? elem.populated_dimms: ''}} {{(elem.maximum_dimms)? '/': ''}} {{(elem.maximum_dimms)? elem.maximum_dimms: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="memory_installed_capacity">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-lg="true"> Installed Memory </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{(elem.installed_memory)? elem.installed_memory: ''}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="network_primary_ip">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-md="true"> Primary IP </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-md="true"> {{elem.primary_ip_address}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="network_ipmi_address">
+                    <th mat-header-cell *matHeaderCellDef fxHide.lt-md="true"> IPMI Address </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-md="true"> {{elem.ipmi_address}} </td>
+                </ng-container>
+
+                <!-- Expanded Content Column -->
+                <ng-container matColumnDef="expanded_details">
+                    <td mat-cell *matCellDef="let elem" [attr.colspan]="displayedColumns.length">
+                        <div class="details-container" [@expandDetails]="(elem == expandedElem)? 'expanded': 'collapsed'">
+                            <h1>/* EXPANDED DETAILS */</h1>
+                        </div>
+                    </td>
+                </ng-container>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+    </mat-tab>
+
+    <mat-tab label="Host Map">
+        <h1>/* MAP CHART HERE */</h1>
+    </mat-tab>
+
+</mat-tab-group>
