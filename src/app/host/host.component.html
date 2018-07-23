@@ -8,6 +8,9 @@
                     <mat-form-field fxFlex="1 1 auto">
                         <input matInput (keyup)="search($event.target.value)" placeholder="Search">
                     </mat-form-field>
+                    <button mat-icon-button color="primary" style="margin-left: 20px;" (click)="download()">
+                        <mat-icon aria-label="Download Excel Report" matTooltip="Download Excel Report">save_alt</mat-icon>
+                    </button>
                 </div>
                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="name" matSortDisableClear matSortDirection="asc" class="mat-elevation-z4">
             

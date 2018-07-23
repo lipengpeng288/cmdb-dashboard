@@ -5,7 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { HeaderService } from '../header';
-import { DataService } from '../../@service';
+import { DataService, ReportService } from '../../@service';
 
 @Component({
     selector: 'app-host',
@@ -36,6 +36,7 @@ export class AppHostComponent implements OnInit, OnDestroy {
     constructor(
         private _header: HeaderService,
         private _dataSvc: DataService,
+        private _reportSvc: ReportService,
     ) { }
 
     ngOnInit() {
@@ -68,5 +69,15 @@ export class AppHostComponent implements OnInit, OnDestroy {
         this.isAllSelected() ?
             this.selection.clear() :
             this.dataSource.data.forEach(row => this.selection.select(row));
+    }
+
+    download() {
+        this._reportSvc.download().subscribe((blob) => {
+            const dl = document.createElement('a');
+            dl.download = 'report.xlsx';
+            dl.href = window.URL.createObjectURL(blob);
+            dl.dataset.downloadurl = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', dl.download, dl.href].join(':');
+            dl.click();
+        });
     }
 }

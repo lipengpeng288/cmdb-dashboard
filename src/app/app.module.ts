@@ -48,7 +48,7 @@ import { AppComponent } from './app.component';
 import { AppHeaderComponent, HeaderService } from './header';
 import { AppHostComponent, AppHostDetailComponent } from './host';
 import { TitleDirective, DelayDirective } from '../@directive';
-import { DataService } from '../@service';
+import { DataService, ReportService } from '../@service';
 
 @NgModule({
     declarations: [
@@ -107,6 +107,7 @@ import { DataService } from '../@service';
     providers: [
         HeaderService,
         DataService,
+        ReportService,
     ],
     bootstrap: [AppComponent]
 })

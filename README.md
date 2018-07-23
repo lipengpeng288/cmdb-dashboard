@@ -4,7 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Kickstart
 
-Clone the code to your local environment, then run `make` to build for production usage. This is highly recommended if you are building it in docker or other stateless builders.
+Clone the code to your local environment, then run `make` to build for production usage.
+
+This is highly recommended if you are building it in docker or other stateless builders.
 
 ## Contributing
 

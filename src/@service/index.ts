@@ -1,2 +1,3 @@
 export * from './data.service';
-export {DataObject} from './types';
+export * from './report.service';
+export { DataObject } from './types';
