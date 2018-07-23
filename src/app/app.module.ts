@@ -47,11 +47,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppHeaderComponent, HeaderService } from './header';
 import { AppHostComponent, AppHostDetailComponent } from './host';
-import { TitleDirective } from '../@directive';
+import { TitleDirective, DelayDirective } from '../@directive';
 import { DataService } from '../@service';
 
 @NgModule({
     declarations: [
+        DelayDirective,
         TitleDirective,
         AppComponent,
         AppHeaderComponent,
