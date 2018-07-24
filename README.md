@@ -1,6 +1,6 @@
 # CMDB Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.x.
+This project currently requires two files, `report.json` and `report.xlsx`, both are generated with `ivy-utils cmdb report`. You should put them into `/assets/temp` directory, or the application will not work properly.
 
 ## Kickstart
 
@@ -8,9 +8,15 @@ Clone the code to your local environment, then run `make` to build for productio
 
 This is highly recommended if you are building it in docker or other stateless builders.
 
+## Known Issues
+
+1. The `MatSortable` component could not set `transition` properly if `MatTab`'s focus has changed.
+
 ## Contributing
 
-### Setup environment
+This project is powered by Google Angular 6.0.x and Google Material Design.
+
+### Setup Environment
 
 Install Dev Tool Kit:
 
@@ -24,13 +30,13 @@ Sync dependencies:
 make deps
 ```
 
-### Run test server
+### Run Test Server
 
 ```bash
 make run
 ```
 
-A nano web server will serve and listen on [http://127.0.0.1:8080/](http://127.0.0.1:8080/)
+A nano web server will serve and listen on [http://127.0.0.1:4200/](http://127.0.0.1:4200/)
 
 ### Build
 

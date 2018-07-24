@@ -14,7 +14,7 @@ export class DataService {
     ) {}
 
     private fetch(): Observable<any> {
-        return this.http.get('/assets/report.json');
+        return this.http.get('/assets/temp/report.json');
     }
 
     public query(hostname: string): Observable<DataObject> {

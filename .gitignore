@@ -39,5 +39,4 @@ testem.log
 Thumbs.db
 
 # User data assets
-/src/assets/*.json
-/src/assets/*.xlsx
+temp

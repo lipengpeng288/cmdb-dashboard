@@ -11,7 +11,7 @@ export class ReportService {
     ) {}
 
     download(): Observable<Blob> {
-        return this.http.get('/assets/report.xlsx', {
+        return this.http.get('/assets/temp/report.xlsx', {
             responseType: 'blob',
             // TODO: Add query params if there are
         })
