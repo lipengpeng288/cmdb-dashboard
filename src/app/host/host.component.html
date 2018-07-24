@@ -1,7 +1,7 @@
 <ng-container title="Overview" title-suffix="Host"></ng-container>
 <mat-tab-group (focusChange)="expandedElem = null">
     <mat-tab label="Overview">
-        <div class="overview" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10ppx">
+        <div class="overview" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
             <div fxLayoutAlign="start center">
                 <mat-icon style="margin: 2px 8px 2px 0">search</mat-icon>
                 <mat-form-field fxFlex="1 1 auto">
@@ -100,8 +100,8 @@
                 </ng-container>
         
                 <ng-container matColumnDef="memory_populated_dimms">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-lg="true"> Populated DIMMs </th>
-                    <td mat-cell *matCellDef="let elem" fxHide.lt-lg="true"> {{elem.populated_dimms}} {{(elem.maximum_dimms)? '/': ''}} {{(elem.maximum_dimms)? elem.maximum_dimms: ''}} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-xl="true"> Populated DIMMs </th>
+                    <td mat-cell *matCellDef="let elem" fxHide.lt-xl="true"> {{elem.populated_dimms}} {{(elem.maximum_dimms)? '/': ''}} {{(elem.maximum_dimms)? elem.maximum_dimms: ''}} </td>
                 </ng-container>
         
                 <ng-container matColumnDef="memory_installed_capacity">
@@ -125,7 +125,7 @@
                         <div class="details-container" [@expandDetails]="(elem == expandedElem)? 'expanded': 'collapsed'" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" *delay>
                             <div fxHide fxShow.lt-xl="true" fxFlex="1 1 auto" class="details-manufacturer">
                                 <h3>Basic Information</h3>
-                                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="4px">
+                                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="6px">
                                     <div fxHide fxShow.lt-sm="true" fxLayout="row">
                                         <div class="key"> Manufacturer: </div>
                                         <div class="value"> {{elem.manufacturer}} </div>
@@ -162,7 +162,7 @@
                                         <div class="key">CPU Cores:</div>
                                         <div class="value">{{elem.cpu_cores}} {{(elem.cpu_threads)? '/': ''}} {{(elem.cpu_threads)? elem.cpu_threads: ''}}</div>
                                     </div>
-                                    <div fxHide fxShow.lt-lg="true" fxLayout="row">
+                                    <div fxHide fxShow.lt-xl="true" fxLayout="row">
                                         <div class="key">Populated DIMMs:</div>
                                         <div class="value">{{elem.populated_dimms}} {{(elem.maximum_dimms)? '/': ''}} {{(elem.maximum_dimms)? elem.maximum_dimms: ''}}</div>
                                     </div>
@@ -183,19 +183,23 @@
                             </div>
                             <div fxFlex="1 1 auto" class="details-virtual-disks">
                                 <h3>Virtual Disks</h3>
-                                <div *ngFor="let vd of elem.virtual_disks" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                                    <div style="font-weight: 600;">{{vd.name}}</div>
-                                    <div>{{vd.layout}}</div>
-                                    <div>{{vd.size}}</div>
+                                <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="6px">
+                                    <div *ngFor="let vd of elem.virtual_disks" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+                                        <div style="font-weight: 600;">{{vd.name}}</div>
+                                        <div>{{vd.layout}}</div>
+                                        <div>{{vd.size}}</div>
+                                    </div>
                                 </div>
                             </div>
                             <div fxFlex="1 1 auto" class="details-logical-interfaces">
                                 <h3>Logical Interfaces</h3>
-                                <div *ngFor="let li of elem.logical_intfs" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
-                                    <div style="font-weight: 600;">{{li.name}}</div>
-                                    <div>Type: {{li.type}}</div>
-                                    <div fxLayout="column" fxLayoutGap="6px">
-                                        <div *ngFor="let m of li.members">{{m.name}} MAC: {{m.mac_address}}</div>
+                                <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="6px">
+                                    <div *ngFor="let li of elem.logical_intfs" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+                                        <div style="font-weight: 600;">{{li.name}}</div>
+                                        <div>Type: {{li.type}}</div>
+                                        <div fxLayout="column" fxLayoutGap="4px">
+                                            <div *ngFor="let m of li.members">{{m.name}} MAC: {{m.mac_address}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -203,8 +207,8 @@
                     </td>
                 </ng-container>
             </table>
+            <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons="true"></mat-paginator>
         </div>
-        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
     </mat-tab>
 
     <mat-tab label="Host Map">
