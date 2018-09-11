@@ -1,22 +1,34 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppHostComponent } from './host';
-import { AppHostDetailComponent } from './host/detail/detail.component';
+import { AppDigestComponent } from './digest';
+import { AppSnapshotComponent } from './snapshot';
+import { AppDownloadComponent } from './download';
+import { AppMachineComponent } from './machine';
 
 const routes: Routes = [{
-    path: '',
-    redirectTo: 'host',
+    path: 'machine',
+    component: AppMachineComponent,
     pathMatch: 'full',
 }, {
-    path: 'host',
-    component: AppHostComponent,
+    path: 'digest',
+    component: AppDigestComponent,
+    pathMatch: 'full',
 }, {
-    path: 'host/:name',
-    component: AppHostDetailComponent,
+    path: 'snapshot/:name',
+    component: AppSnapshotComponent,
+    pathMatch: 'full',
+}, {
+    path: 'download',
+    component: AppDownloadComponent,
+    pathMatch: 'full',
+}, {
+    path: '**',
+    redirectTo: 'digest',
+    pathMatch: 'full',
 }];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}

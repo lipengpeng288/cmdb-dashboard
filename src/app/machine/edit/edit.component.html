@@ -1,0 +1,80 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+    <h2 mat-dialog-title>{{create? 'Create Machine': 'Edit Machine'}}</h2>
+    <div fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="end stretch">
+        <mat-slide-toggle color="primary" (change)="toggleMode($event)" [disabled]="form.invalid || hasYAMLErrors">YAML</mat-slide-toggle>
+    </div>
+</div>
+<mat-dialog-content>
+    <form fxShow [fxHide]="debug" class="form" [formGroup]="form" fxLayout="column" fxLayoutAlign="start stretch">
+        <ng-container formGroupName="metadata">
+            <mat-form-field>
+                <input matInput placeholder="Name" formControlName="name" pattern="^[a-zA-Z]{1}[A-Za-z0-9_]*$" required>
+                <mat-error *ngIf="form.get('metadata.name').invalid">{{form.get('metadata.name').hasError('required')? 'Name must be specified.': (form.get('metadata.name').hasError('pattern')? 'Not a valid name.': 'Unexpected error.')}}</mat-error>
+            </mat-form-field>
+        </ng-container>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start end" fxLayoutGap="10px">
+            <mat-form-field fxFlex="1 1 auto">
+                <input matInput placeholder="SSH Address" formControlName="ssh_addr" pattern="^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$">
+                <mat-error *ngIf="form.get('ssh_addr').invalid">{{form.get('ssh_addr').hasError('pattern')? 'Not a valid IP address.': 'Unexpected error.'}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="number" placeholder="SSH Port" formControlName="ssh_port" required>
+                <mat-error *ngIf="form.get('ssh_port').invalid">{{form.get('ssh_port').hasError('required')? 'SSH port must be specified.': (form.get('ssh_port').hasError('min') || form.get('ssh_port').hasError('max')? 'Not a valid port number between 1 and 65535.': 'Unexpected error.')}}</mat-error>
+            </mat-form-field>
+        </div>
+        <mat-form-field>
+            <input matInput placeholder="SSH User" formControlName="ssh_user" pattern="^[a-zA-Z]{1}[A-Za-z0-9_.]*$" required>
+            <mat-error *ngIf="form.get('ssh_user').invalid">{{form.get('ssh_user').hasError('required')? 'SSH login user must be specified.': (form.get('ssh_user').hasError('pattern')? 'Not a valid user name.': 'Unexpected error.')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="IPMI Address" formControlName="ipmi_addr" pattern="^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" required>
+            <mat-error *ngIf="form.get('ipmi_addr').invalid">{{form.get('ipmi_addr').hasError('required')? 'IPMI address must be specified.': (form.get('ipmi_addr').hasError('pattern')? 'Not a valid IP address.': 'Unexpected error.')}}</mat-error>
+        </mat-form-field>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start end" fxLayoutGap="10px">
+            <mat-form-field fxFlex="1 1 auto">
+                <input matInput placeholder="IPMI User" formControlName="ipmi_user" pattern="^[a-zA-Z]{1}[A-Za-z0-9_]*$" required>
+                <mat-error *ngIf="form.get('ipmi_user').invalid">{{form.get('ipmi_user').hasError('required')? 'IPMI login user must be specified.': (form.get('ipmi_user').hasError('pattern')? 'Not a valid user name.': 'Unexpected error.')}}</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="1 1 auto">
+                <input matInput [type]="hidePassword? 'password': 'text'" placeholder="IPMI Password" formControlName="ipmi_pass" pattern="^[^ \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]+$" required>
+                <mat-icon matSuffix (click)="hidePassword = !hidePassword" style="cursor: pointer">{{hidePassword? 'visibility': 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf="form.get('ipmi_pass').invalid">{{form.get('ipmi_pass').hasError('required')? 'IPMI login password must be specified.': (form.get('ipmi_pass').hasError('pattern')? 'Password shall not contains whitespaces.': 'Unexpected error')}}</mat-error>
+            </mat-form-field>
+        </div>
+        <ng-container formGroupName="extra_info">
+            <mat-form-field>
+                <input matInput placeholder="Comment" formControlName="comment" pattern="^[^\f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]+$">
+                <mat-error *ngIf="form.get('extra_info.comment').invalid">{{form.get('extra_info.comment').hasError('pattern')? 'Comment shall not contains whitespace characters except spaces.': 'Unexpected error.'}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Department" formControlName="department" pattern="^[^\f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]+$">
+                <mat-error *ngIf="form.get('extra_info.department').invalid">{{form.get('extra_info.department').hasError('pattern')? 'Department name shall only contains letters, numeric, and spaces.': 'Unexpected error.'}}</mat-error>
+            </mat-form-field>
+            <ng-container formGroupName="location">
+                <mat-form-field>
+                    <input matInput placeholder="Rack Name" formControlName="rack_name" pattern="^[A-Za-z0-9_]+$">
+                    <mat-error *ngIf="form.get('extra_info.location.rack_name').invalid">{{form.get('extra_info.location.rack_name').hasError('pattern')? 'Rack name shall only contains alphanumeric and underscore.': 'Unexpected error.'}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Rack Slot" formControlName="rack_slot" pattern="^[A-Za-z0-9_]+$">
+                    <mat-error *ngIf="form.get('extra_info.location.rack_slot').invalid">{{form.get('extra_info.location.rack_slot').hasError('pattern')? 'Rack slot shall only contains alphanumeric and underscore.': 'Unexpected error.'}}</mat-error>
+                </mat-form-field>
+            </ng-container>
+        </ng-container>
+    </form>
+    <div fxHide [fxShow]="debug" class="editor" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        <mat-error *ngIf="YAMLErrorMsg" style="font-size: 12px;">
+            <div *ngIf="YAMLErrorMsg.length === 1">* {{YAMLErrorMsg[0]}}</div>
+            <div *ngIf="YAMLErrorMsg.length > 1">* Multiple errors exist:
+                <ol style="list-style-type: disc; margin: 6px 0 6px 0; font-size: 10px;">
+                    <li *ngFor="let err of YAMLErrorMsg">{{err}}</li>
+                </ol>
+            </div>
+        </mat-error>
+        <div fxFlex="1 0 auto" fxFlexFill [(text)]="yaml" mode="yaml" (onChange)="yaml = $event" editor></div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="10px">
+    <button mat-button (click)="abort()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="apply()" [disabled]="form.invalid || hasYAMLErrors">OK</button>
+</mat-dialog-actions>

@@ -1,4 +1,4 @@
-all: devel build
+all: ready build
 
 deps:
 	@yarn
@@ -18,7 +18,10 @@ lint: deps
 run: deps
 	@yarn run start
 
-devel:
+devel: deps
+	@yarn run startwithproxy
+
+ready:
 	node -v
 	@npm -g install @angular/cli
 	@npm -g install yarn

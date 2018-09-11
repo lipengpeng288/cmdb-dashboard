@@ -1,0 +1,12 @@
+<ng-container title="Download Center" title-suffix="CMDB"></ng-container>
+<div class="download" fxFlex="1 1 auto" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon class="bg-icon">save_alt</mat-icon>
+        </div>
+        <div>
+            <h2>Thank you for downloading {{display_name}}</h2>
+            <p>If your download does not start after 30 seconds, <a class="link" href="javascript:;" (click)="download()">click here</a> to download manually. </p>
+        </div>
+    </div>
+</div>

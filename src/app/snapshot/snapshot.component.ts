@@ -1,35 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { DataObject, DataService } from '../../../@service';
+import { MachineSnapshot, DataService } from '@core';
 import { Subscription } from 'rxjs';
-import { HeaderService } from '../../header';
+import { HeaderService } from '../header';
 
 @Component({
-    selector: 'app-host-detail',
-    templateUrl: './detail.component.html',
-    styleUrls: ['./detail.component.scss']
+    selector: 'app-snapshot',
+    templateUrl: './snapshot.component.html',
+    styleUrls: ['./snapshot.component.scss']
 })
-export class AppHostDetailComponent implements OnInit, OnDestroy {
+export class AppSnapshotComponent implements OnInit, OnDestroy {
     name: string;
-    data: DataObject;
+    data: MachineSnapshot;
     
     private _subscription: Subscription;
 
     constructor(
         private route: ActivatedRoute,
         private _header: HeaderService,
-        private _dataSvc: DataService,
+        private _data: DataService,
     ) {
         this.route.paramMap.subscribe(
             (params: ParamMap) => {
                 this.name = decodeURI(params.get('name'));
-                this._header.title = `Details - ${this.name}`;
+                this._header.title = `Snapshot - ${this.name}`;
             }
         )
     }
 
     ngOnInit() {
-        this._subscription = this._dataSvc.query(this.name).subscribe((data) => {
+        this._subscription = this._data.queryMachineSnapshot(this.name).subscribe((data) => {
             this.data = data;
         });
     }

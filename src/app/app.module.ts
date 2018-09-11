@@ -46,18 +46,26 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppHeaderComponent, HeaderService } from './header';
-import { AppHostComponent, AppHostDetailComponent } from './host';
-import { TitleDirective, DelayDirective } from '../@directive';
-import { DataService, ReportService } from '../@service';
+import { AppDigestComponent } from './digest';
+import { CoreModule } from '@core';
+import { AppDownloadComponent } from './download';
+import { AppSnapshotComponent } from './snapshot';
+import { AppMachineComponent, AppMachineConfirmComponent, AppMachineEditComponent } from './machine';
 
 @NgModule({
     declarations: [
-        DelayDirective,
-        TitleDirective,
         AppComponent,
         AppHeaderComponent,
-        AppHostComponent,
-        AppHostDetailComponent,
+        AppDigestComponent,
+        AppSnapshotComponent,
+        AppDownloadComponent,
+        AppMachineComponent,
+        AppMachineConfirmComponent,
+        AppMachineEditComponent,
+    ],
+    entryComponents: [
+        AppMachineConfirmComponent,
+        AppMachineEditComponent,
     ],
     imports: [
         BrowserModule,
@@ -103,11 +111,10 @@ import { DataService, ReportService } from '../@service';
         MatTreeModule,
         FlexLayoutModule,
         AppRoutingModule,
+        CoreModule,
     ],
     providers: [
         HeaderService,
-        DataService,
-        ReportService,
     ],
     bootstrap: [AppComponent]
 })

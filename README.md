@@ -36,7 +36,7 @@ make deps
 make run
 ```
 
-A nano web server will serve and listen on [http://127.0.0.1:4200/](http://127.0.0.1:4200/)
+A nano web server will serve and listen on [http://127.0.0.1:4210/](http://127.0.0.1:4210/)
 
 ### Build
 

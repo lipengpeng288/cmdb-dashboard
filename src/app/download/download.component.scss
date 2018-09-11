@@ -1,0 +1,24 @@
+:host {
+    display: flex;
+    min-width: 100%;
+
+    .download {
+        padding-top: 40px;
+
+        .bg-icon {
+            width: 64px;
+            height: 64px;
+            color: #aaa;
+            font-size: 64px;
+            font-weight: 300;
+        }
+
+        .link {
+            color: #0277bd;
+            text-decoration-line: none;
+            &:hover {
+                text-decoration-line: underline;
+            }
+        }
+    }
+}
