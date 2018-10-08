@@ -1,2 +1,32 @@
 <ng-container title-prefix="Snapshot" [title]="name" title-suffix="Machine"></ng-container>
-<h1>/* FURTHER DETAILS HERE */</h1>
+<ng-container *ngIf="data">
+    <div class="my-style"> GUID:{{data.metadata.guid}}</div>
+    <div class="my-style">Name:{{data.metadata.namespace}}</div>
+</ng-container>
+
+<mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="example-tree">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+      <li class="mat-tree-node ">
+        <button mat-icon-button disabled></button>
+        {{node.filename | uppercase}}:  {{node.type}}
+      </li>
+    </mat-tree-node>
+  
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+      <li>
+        <div class="mat-tree-node">
+          <button mat-icon-button matTreeNodeToggle
+                  [attr.aria-label]="'toggle ' + node.filename">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{nestedTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          {{node.filename | uppercase}}
+        </div>
+        <ul [class.example-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+          <ng-container matTreeNodeOutlet></ng-container>
+        </ul>
+      </li>
+    </mat-nested-tree-node>
+  </mat-tree>
+  

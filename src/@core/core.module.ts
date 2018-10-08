@@ -1,6 +1,6 @@
 
 import { NgModule } from '@angular/core';
-import { DelayDirective, TitleDirective, EditorDirective, ChartDirective } from '@core/directive';
+import { DelayDirective, TitleDirective, EditorDirective, ChartDirective, TooltipDirective } from '@core/directive';
 import { DataService } from '@core/service';
 
 @NgModule({
@@ -9,15 +9,17 @@ import { DataService } from '@core/service';
         EditorDirective,
         ChartDirective,
         TitleDirective,
+        TooltipDirective
     ],
     exports: [
         DelayDirective,
         EditorDirective,
         ChartDirective,
         TitleDirective,
+        TooltipDirective
     ],
     providers: [
-        DataService,
+        DataService
     ]
 })
 export class CoreModule {}

@@ -34,7 +34,7 @@ export class AppMachineComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
         private _header: HeaderService,
         private _data: DataService,
-    ){}
+    ) {}
 
     ngOnInit() {
         this._header.title = 'Machine Management';
@@ -72,7 +72,7 @@ export class AppMachineComponent implements OnInit, OnDestroy {
     }
 
     create() {
-        let ref = this.dialog.open(AppMachineEditComponent, {disableClose: true, data: null});
+        const ref = this.dialog.open(AppMachineEditComponent, {disableClose: true, data: null});
         ref.afterClosed().subscribe((obj) => {
             if (!obj) {
                 return;
@@ -80,7 +80,7 @@ export class AppMachineComponent implements OnInit, OnDestroy {
             this._data.createMachine(obj).subscribe((data) => {
                 // MatTableDataSource's data is indeed a callback fn, so we must copy it first, and then
                 // assign its value with the updated one.
-                let dump = this.dataSource.data;
+                const dump = this.dataSource.data;
                 dump.push(data);
                 this.dataSource.data = dump;
             }, (err) => {
@@ -91,7 +91,7 @@ export class AppMachineComponent implements OnInit, OnDestroy {
     }
 
     update(obj: Machine) {
-        let ref = this.dialog.open(AppMachineEditComponent, {disableClose: true, data: obj});
+        const ref = this.dialog.open(AppMachineEditComponent, {disableClose: true, data: obj});
         ref.afterClosed().subscribe((updated) => {
             if (!updated) {
                 return;
@@ -100,9 +100,9 @@ export class AppMachineComponent implements OnInit, OnDestroy {
                 if (!obj) {
                     return;
                 }
-                for (let i in this.dataSource.data) {
+                for (const i in this.dataSource.data) {
                     if (this.dataSource.data[i].metadata.name === data.metadata.name) {
-                        let dump = this.dataSource.data;
+                        const dump = this.dataSource.data;
                         dump[i] = data;
                         this.dataSource.data = dump;
                         break;
@@ -111,29 +111,29 @@ export class AppMachineComponent implements OnInit, OnDestroy {
             }, (err) => {
                 // TODO: ERROR SHALL BE PROMPT ONTO SCREEN!
                 console.error(err);
-            })
+            });
         });
     }
 
     deleteSelection() {
-        let ref = this.dialog.open(AppMachineConfirmComponent, {disableClose: true, data: this.selection.selected});
+        const ref = this.dialog.open(AppMachineConfirmComponent, {disableClose: true, data: this.selection.selected});
         ref.afterClosed().subscribe((agreed) => {
             if (!agreed) {
                 return;
             }
-            let recur = (fn: (number) => Observable<void>, length: number) => {
-                let index = length-1;
+            const recur = (fn: (number) => Observable<void>, length: number) => {
+                const index = length - 1;
                 if (index < 0) {
                     this.selection.clear();
                     this.refresh();
                     return;
                 }
-                fn(length-1).subscribe(() => {
+                fn(length - 1).subscribe(() => {
                     recur(fn, index);
                 }, (err) => {
                     console.error(err);
                 });
-            }
+            };
             // Delete machine recursively.
             recur((index: number) => {
                 return this._data.deleteMachine(this.selection.selected[index].metadata.name);
@@ -142,16 +142,16 @@ export class AppMachineComponent implements OnInit, OnDestroy {
     }
 
     delete(obj: Machine) {
-        let ref = this.dialog.open(AppMachineConfirmComponent, {disableClose: true, data: [obj]});
+        const ref = this.dialog.open(AppMachineConfirmComponent, {disableClose: true, data: [obj]});
         ref.afterClosed().subscribe((agreed) => {
             if (!agreed) {
                 return;
             }
             const name = obj.metadata.name;
             this._data.deleteMachine(name).subscribe(() => {
-                for (let i in this.dataSource.data) {
+                for (const i in this.dataSource.data) {
                     if (this.dataSource.data[i].metadata.name === name) {
-                        let dump = this.dataSource.data;
+                        const dump = this.dataSource.data;
                         dump.splice(Number(i), 1);
                         this.dataSource.data = dump;
                         break;
@@ -160,7 +160,7 @@ export class AppMachineComponent implements OnInit, OnDestroy {
             }, (err) => {
                 // TODO: ERROR SHALL BE PROMPT ONTO SCREEN!
                 console.error(err);
-            })
+            });
         });
     }
 
@@ -175,6 +175,6 @@ export class AppMachineComponent implements OnInit, OnDestroy {
                 return;
             }
             this.dataSource = new MatTableDataSource(data);
-        })
+        });
     }
 }
