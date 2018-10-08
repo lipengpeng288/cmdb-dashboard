@@ -17,9 +17,9 @@ export class TitleDirective implements OnInit {
     ngOnInit() {
         // The title will not be updated unless it is configured explicitly.
         if (!this.title) {
-            return
+            return;
         }
-        let od: string[] = [];
+        const od: string[] = [];
         if (this.prefix) {
             od.push(this.prefix, this.delimiter);
         }
