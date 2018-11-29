@@ -47,10 +47,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppHeaderComponent, HeaderService } from './header';
 import { AppDigestComponent } from './digest';
-import { CoreModule } from '@core';
+import { CoreModule, CoverService } from '@core';
 import { AppDownloadComponent } from './download';
 import { AppSnapshotComponent } from './snapshot';
 import { AppMachineComponent, AppMachineConfirmComponent, AppMachineEditComponent } from './machine';
+import { UppercasePipe } from './snapshot/uppercase.pipe';
+import { CoverComponent } from './cover/cover.component';
+
 
 @NgModule({
     declarations: [
@@ -62,6 +65,8 @@ import { AppMachineComponent, AppMachineConfirmComponent, AppMachineEditComponen
         AppMachineComponent,
         AppMachineConfirmComponent,
         AppMachineEditComponent,
+        CoverComponent,
+        UppercasePipe
     ],
     entryComponents: [
         AppMachineConfirmComponent,
@@ -115,6 +120,7 @@ import { AppMachineComponent, AppMachineConfirmComponent, AppMachineEditComponen
     ],
     providers: [
         HeaderService,
+        CoverService
     ],
     bootstrap: [AppComponent]
 })

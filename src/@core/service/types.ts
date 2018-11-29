@@ -43,7 +43,7 @@ export class MachineSnapshot implements GenericObject, MachineOverridableInfo {
     manufacturer?: string;
     model?: string;
     serial_number?: string;
-    
+
     os?: string;
     type?: string;
     department?: string;

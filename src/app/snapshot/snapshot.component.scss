@@ -1,3 +1,26 @@
 :host {
-    
+    min-width: 100%;
+    .example-tree-invisible {
+        display: none;
+      }
+      
+      .example-tree ul,
+      .example-tree li {
+        margin-top: 0;
+        margin-bottom: 0;
+        list-style-type: none;
+    }
+    .my-style{
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        flex:1;
+        overflow: hidden;
+        word-wrap:break-word;
+        color:rgba(0,0,0,0.87);
+        font-weight:400;
+        font-size:14px;
+        font-family: Roboto,"Helvetica Neue",sans-serif;
+        padding-left: 40px;
+    }
 }

@@ -209,14 +209,28 @@
                         </td>
                     </ng-container>
                 </table>
-                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons="true"></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLast Buttons="true"></mat-paginator>
             </div>
         </mat-tab>
 
-        <mat-tab label="Host Map">
-            <h1>/* MAP CHART HERE */</h1>
+        <mat-tab label="Rack Map">
+           <div>
+               <div class="room">
+                    <div class="rack" *ngFor="let r of rackNames; let j=index" [style.z-index]="zIndex[j]">
+                        <div class="rack_slot"*ngFor="let m of r; let i=index" (mouseenter)="setLoactionPosition($event,j)" (mouseleave)="resetLoactionPosition($event,j)">
+                            <div class="tooltiptext " [style.right]="setRight" [style.bottom]="setBottom" [style.z-index]="zIndex[i]">
+                                <p class="lt-margin">Name: {{m.metadata.namespace}}</p>
+                                <p class="lt-margin">Room Name: {{m.location.room_name}}</p>
+                                <p class="lt-margin">Aisle: {{m.location.aisle}}</p>
+                                <p class="lt-margin">Rack Name: {{m.location.rack_name}}</p>
+                                <p class="lt-margin">Rack Slot: {{m.location.rack_slot}}</p>
+                            </div>    
+                        </div>
+                        <div class="room_name">{{r[0].location.rack_name}}</div>
+                    </div>
+               </div>  
+           </div>
         </mat-tab>
-
     </mat-tab-group>
 </div>
 

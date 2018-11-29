@@ -62,7 +62,7 @@ export class AppDownloadComponent implements OnInit, OnDestroy {
 
     download() {
         if (this.cache) {
-            this.promptDownload(this.cache);
+            this.promptDownload(this.cache);        
             return;
         }
         switch (this.scope) {
@@ -78,6 +78,7 @@ export class AppDownloadComponent implements OnInit, OnDestroy {
         const dl = document.createElement('a');
         dl.download = this.save_as;
         dl.href = window.URL.createObjectURL(data);
+        //console.log("11111"+dl.href);
         dl.dataset.downloadurl = [this.content_type, this.save_as, dl.href].join(':');
         dl.click();
     }

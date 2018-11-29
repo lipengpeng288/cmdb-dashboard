@@ -35,7 +35,7 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
     yamlErrors: {
         [key: string]: string;
     };
-    debug: boolean = false;
+    debug = false;
     hidePassword = true;
 
     constructor(
@@ -68,9 +68,9 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
             this._obj.ssh_port = 22;
             this.create = true;
         }
-        this._obj.metadata = (this._obj.metadata)? this._obj.metadata: {};
-        this._obj.extra_info = (this._obj.extra_info)? this._obj.extra_info: {};
-        this._obj.extra_info.location = (this._obj.extra_info.location)? this._obj.extra_info.location: {};
+        this._obj.metadata = (this._obj.metadata) ? this._obj.metadata : {};
+        this._obj.extra_info = (this._obj.extra_info) ? this._obj.extra_info : {};
+        this._obj.extra_info.location = (this._obj.extra_info.location) ? this._obj.extra_info.location : {};
         this.form = new FormGroup({
             metadata: new FormGroup({
                 name: new FormControl({value: this._obj.metadata.name, disabled: !this.create}, [Validators.required]),
@@ -102,7 +102,6 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
         this.formStream.unsubscribe();
         this.yamlStream.unsubscribe();
     }
-    
     apply() {
         this.save(this.debug);
         if (!this.create && this.data && JSON.stringify(this.data.metadata) !== JSON.stringify(this._obj.metadata)) {
@@ -121,7 +120,7 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
 
     get hasYAMLErrors(): boolean {
         let errs = 0;
-        for (let field in this.yamlErrors) {
+        for (const field in this.yamlErrors) {
             if (!this.yamlErrors.hasOwnProperty(field)) {
                 continue;
             }
@@ -148,11 +147,13 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
             obj.ipmi_user = this.object.ipmi_user;
             obj.ipmi_pass = this.object.ipmi_pass;
             obj.extra_info = {
-                comment: (this.object.extra_info && this.object.extra_info.comment)? this.object.extra_info.comment: null,
-                department: (this.object.extra_info && this.object.extra_info.department)? this.object.extra_info.department: null,
+                comment: (this.object.extra_info && this.object.extra_info.comment) ? this.object.extra_info.comment : null,
+                department: (this.object.extra_info && this.object.extra_info.department) ? this.object.extra_info.department : null,
                 location: {
-                    rack_name: (this.object.extra_info && this.object.extra_info.location && this.object.extra_info.location.rack_name)? this.object.extra_info.location.rack_name: null,
-                    rack_slot: (this.object.extra_info && this.object.extra_info.location && this.object.extra_info.location.rack_slot)? this.object.extra_info.location.rack_slot: null,
+                    rack_name: (this.object.extra_info && this.object.extra_info.location && this.object.extra_info.location.rack_name) ?
+                    this.object.extra_info.location.rack_name : null,
+                    rack_slot: (this.object.extra_info && this.object.extra_info.location && this.object.extra_info.location.rack_slot) ?
+                    this.object.extra_info.location.rack_slot : null,
                 },
             };
             this.form.setValue(obj);
@@ -188,7 +189,7 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
             } else {
                 delete this._obj.extra_info['department'];
             }
-            this._obj.extra_info.location = (this._obj.extra_info.location)? this._obj.extra_info.location: {};
+            this._obj.extra_info.location = (this._obj.extra_info.location) ? this._obj.extra_info.location : {};
             const rack_name = this.form.get('extra_info.location.rack_name').value;
             if (rack_name) {
                 this._obj.extra_info.location.rack_name = rack_name;
@@ -208,7 +209,7 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
         if (this.debug) {
             return;
         }
-        for (let field in this.formErrors) {
+        for (const field in this.formErrors) {
             if (!this.formErrors.hasOwnProperty(field)) {
                 continue;
             }
@@ -242,7 +243,7 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
             this.yamlErrors.metadata = 'Metadata is not allowed to be modified during update.';
             return;
         }
-        obj.metadata = (obj.metadata)? obj.metadata: {};
+        obj.metadata = (obj.metadata) ? obj.metadata : {};
         if (!obj.metadata.name) {
             this.yamlErrors.name = 'Name (metadata.name) is required.';
         } else {
@@ -252,7 +253,9 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
             }
         }
         if (obj.ssh_addr) {
-            const regexp = new RegExp('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
+            const regexp =
+             new RegExp('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' +
+                '\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
             if (!regexp.test(obj.ssh_addr)) {
                 this.yamlErrors.ssh_addr = 'SSH address must be a valid IP address.';
             }
@@ -273,7 +276,9 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
         if (!obj.ipmi_addr) {
             this.yamlErrors.ipmi_addr = 'IPMI address is required.';
         } else {
-            const regexp = new RegExp('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
+            const regexp =
+             new RegExp('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' +
+             '\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
             if (!regexp.test(obj.ipmi_addr)) {
                 this.yamlErrors.ipmi_addr = 'IPMI address must be a valid IP address.';
             }
@@ -303,7 +308,7 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
         this._obj = obj;
         const prop = Object.getOwnPropertyNames(this._obj);
         for (let i = 0; i < prop.length; i++) {
-            let name = prop[i];
+            const name = prop[i];
             if (this._obj[name] === null || this._obj[name] === undefined) {
                 delete this._obj[name];
             }
@@ -312,7 +317,7 @@ export class AppMachineEditComponent implements OnInit, OnDestroy {
 
     get YAMLErrorMsg(): string[] {
         const prop = Object.getOwnPropertyNames(this.yamlErrors);
-        let msg: string[] = [];
+        const msg: string[] = [];
         if (!prop.length) {
             return null;
         }
