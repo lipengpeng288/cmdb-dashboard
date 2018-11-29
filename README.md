@@ -1,6 +1,6 @@
 # CMDB Dashboard
 
-This project currently requires two files, `report.json` and `report.xlsx`, both are generated with `ivy-utils cmdb report`. You should put them into `/assets/temp` directory, or the application will not work properly.
+This project requires CMDB server.
 
 ## Kickstart
 

@@ -8,7 +8,7 @@
     <form fxShow [fxHide]="debug" class="form" [formGroup]="form" fxLayout="column" fxLayoutAlign="start stretch">
         <ng-container formGroupName="metadata">
             <mat-form-field>
-                <input matInput placeholder="Name" formControlName="name" pattern="^[a-zA-Z]{1}[A-Za-z0-9_]*$" required>
+                <input matInput placeholder="Name" formControlName="name" pattern="^[a-zA-Z]{1}[A-Za-z0-9_-]*$" required>
                 <mat-error *ngIf="form.get('metadata.name').invalid">{{form.get('metadata.name').hasError('required')? 'Name must be specified.': (form.get('metadata.name').hasError('pattern')? 'Not a valid name.': 'Unexpected error.')}}</mat-error>
             </mat-form-field>
         </ng-container>
